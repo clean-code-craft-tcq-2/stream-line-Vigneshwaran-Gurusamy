@@ -16,14 +16,14 @@ jobs:
         sudo apt-get install -y gcovr
         
     - name: build sender
-      run: g++ -Wall -Wextra -fprofile-arcs -ftest-coverage -o testsender BatteryReadingTest.cpp ./BatteryReadingSender.c
+      run: g++ -Wall -Wextra -fprofile-arcs -ftest-coverage -o testsender BatteryMonitor_Test.cpp ./SendBatteryReport.c
   
       
     - name: run sender
       run: ./testsender
       
     - name: build receiver
-      run: g++ -Wall -Wextra -fprofile-arcs -ftest-coverage -o testreceiver test_BatteryReadingReceiver.cpp ./BatteryReadingReceiver.c
+      run: g++ -Wall -Wextra -fprofile-arcs -ftest-coverage -o testreceiver BatteryReadingReceiver.cpp ./BatteryReadingReceiver.c
       
     - name: Pipeline sender/receiver
       run: ./testsender | ./testreceiver  
