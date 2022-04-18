@@ -58,7 +58,6 @@ float * ComputeTheReadings(float* Temperature, float* SOC, float* ChargeRate, ch
     float SMAChargeRate =  ComputeSMA(ChargeRate);
     float ComputedDataArray[9] = {MinTemperature,MaxTemperature,MinSOC,MaxSOC,MinChargeRate,MaxChargeRate, SMATemperature, SMASOC, SMAChargeRate};
     sprintf(ComputedData,"%f,%f,%f,%f,%f,%f,%f,%f,%f",MinTemperature,MaxTemperature,MinSOC,MaxSOC,MinChargeRate,MaxChargeRate, SMATemperature, SMASOC, SMAChargeRate);  
-    printf("%s\n",ComputedData);
     return ComputedDataArray;
 }
 
@@ -69,6 +68,7 @@ void ReadBatteryReadingsfromConsole(float* Temperature, float* SOC, float* Charg
         scanf("%f",&ChargeRate[i]);
         scanf("%f",&SOC[i]);
         scanf("%f",&Temperature[i]);
+        printf("%f\n",ChargeRate[i]);
     }
 }
 
