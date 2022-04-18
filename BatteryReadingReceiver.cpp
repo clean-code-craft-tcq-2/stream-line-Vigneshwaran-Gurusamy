@@ -72,5 +72,4 @@ TEST_CASE("Tests to check SMA from the battery parameters")
     REQUIRE(SOCAverage == expectedAverageoutput[1]);
     REQUIRE(ChargeRateAverage== expectedAverageoutput[2]);
   }
-  
 }
