@@ -66,7 +66,7 @@ void ReadBatteryReadingsfromConsole(float* Temperature, float* SOC, float* Charg
     for(int i=0; i<NO_OF_READINGS; i++)
     {
         scanf("%f ,%f ,%f",&ChargeRate[i],&SOC[i],&Temperature[i]);
-       printf("%f\n",ChargeRate[i]);
+       //printf("%f\n",ChargeRate[i]);
     }
 }
 
@@ -75,6 +75,10 @@ float * BatteryReceiver(float* Temperature, float* SOC, float* ChargeRate)
   char ComputedData[50];
   float *ComputedDataArray;
   ReadBatteryReadingsfromConsole(Temperature,SOC,ChargeRate);
+      for(int i=0; i<NO_OF_READINGS; i++)
+    {
+            printf("%f\n",ChargeRate[i]);
+    }
   ComputedDataArray = ComputeTheReadings(Temperature,SOC,ChargeRate, ComputedData);
   PrintComputedReadingsOnConsole(ComputedData);
   return ComputedDataArray;
