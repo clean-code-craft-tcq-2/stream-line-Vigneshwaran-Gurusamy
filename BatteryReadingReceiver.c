@@ -66,6 +66,7 @@ void ReadBatteryReadingsfromConsole(float* Temperature, float* SOC, float* Charg
     for(int i=0; i<NO_OF_READINGS; i++)
     {
         scanf("%f ,%f ,%f",&ChargeRate[i],&SOC[i],&Temperature[i]);
+       printf("%f\n",ChargeRate[i]);
     }
 }
 
