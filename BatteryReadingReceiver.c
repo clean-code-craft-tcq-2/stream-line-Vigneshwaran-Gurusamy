@@ -6,7 +6,7 @@
 
 void PrintComputedReadingsOnConsole(char *ComputedData)
 {
-  printf("%s\n",ComputedData);
+  //printf("%s\n",ComputedData);
 }
 
 float ComputeSMA(float data[])
@@ -65,7 +65,7 @@ void ReadBatteryReadingsfromConsole(float* Temperature, float* SOC, float* Charg
 {
     for(int i=0; i<NO_OF_READINGS; i++)
     {
-        scanf("%f,%f,%f",&ChargeRate[i],&SOC[i],&Temperature[i]);
+        scanf("%f ,%f ,%f",&ChargeRate[i],&SOC[i],&Temperature[i]);
     }
 }
 
