@@ -56,7 +56,7 @@ float * ComputeTheReadings(float* Temperature, float* SOC, float* ChargeRate, ch
     float SMATemperature =  ComputeSMA(Temperature);
     float SMASOC = ComputeSMA(SOC);
     float SMAChargeRate =  ComputeSMA(ChargeRate);
-    arrayToComputedData = (float*)calloc(9, sizeof(flaot));
+    arrayToComputedData = (float*)calloc(9, sizeof(float));
     arrayToComputedData[9] = {MinTemperature,MaxTemperature,MinSOC,MaxSOC,MinChargeRate,MaxChargeRate, SMATemperature, SMASOC, SMAChargeRate};
     sprintf(ComputedData,"MinTemperature:%f,MaxTemperature:%f,MinSOC:%f,MaxSOC:%f,MinChargeRate:%f,MaxChargeRate:%f,SMATemperature:%f,SMASOC:%f,SMAChargeRate:%f",MinTemperature,MaxTemperature,MinSOC,MaxSOC,MinChargeRate,MaxChargeRate, SMATemperature, SMASOC, SMAChargeRate);  
     return arrayToComputedData;
