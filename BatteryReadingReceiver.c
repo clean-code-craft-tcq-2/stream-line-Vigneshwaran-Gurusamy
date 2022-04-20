@@ -2,6 +2,7 @@
 #include <math.h>
 #include <stdlib.h>
 #include "BatteryReadingReceiver.h"
+float *ComputedDataArray;
 
 void PrintComputedReadingsOnConsole(char *ComputedData)
 {
@@ -44,8 +45,9 @@ float ComputeMin(float data[])
     return Minimum;
 }
 
-void ComputeTheReadings(float* Temperature, float* SOC, float* ChargeRate, char *ComputedData,float *ComputedDataArray)
+float* ComputeTheReadings(float* Temperature, float* SOC, float* ChargeRate, char *ComputedData)
 {
+    ComputedDataArray = (float*)calloc(9, sizeof(float));
     float MinTemperature = ComputeMin(Temperature);
     float MaxTemperature = ComputeMax(Temperature);
     float MinSOC = ComputeMin(SOC);
@@ -55,9 +57,10 @@ void ComputeTheReadings(float* Temperature, float* SOC, float* ChargeRate, char 
     float SMATemperature =  ComputeSMA(Temperature);
     float SMASOC = ComputeSMA(SOC);
     float SMAChargeRate =  ComputeSMA(ChargeRate);
-    ComputedDataArray[9] = {MinTemperature,MaxTemperature,MinSOC,MaxSOC,MinChargeRate,MaxChargeRate, SMATemperature, SMASOC, SMAChargeRate};
+    ComputedDataArray = {MinTemperature,MaxTemperature,MinSOC,MaxSOC,MinChargeRate,MaxChargeRate, SMATemperature, SMASOC, SMAChargeRate};
     sprintf(ComputedData,"MinTemperature:%f,MaxTemperature:%f,MinSOC:%f,MaxSOC:%f,MinChargeRate:%f,MaxChargeRate:%f,SMATemperature:%f,SMASOC:%f,SMAChargeRate:%f",MinTemperature,MaxTemperature,MinSOC,MaxSOC,MinChargeRate,MaxChargeRate, SMATemperature, SMASOC, SMAChargeRate);  
-   }
+   return ComputedDataArray;
+}
 
 void ReadBatteryReadingsfromConsole(float* Temperature, float* SOC, float* ChargeRate)
 {
@@ -70,14 +73,14 @@ void ReadBatteryReadingsfromConsole(float* Temperature, float* SOC, float* Charg
 float * BatteryReceiver(float* Temperature, float* SOC, float* ChargeRate)
 {
   char ComputedData[50];
-  float ComputedDataArray[9];
+  float *ComputedBatteryparameter;
   ReadBatteryReadingsfromConsole(Temperature,SOC,ChargeRate);
-  ComputeTheReadings(Temperature,SOC,ChargeRate, ComputedData,ComputedDataArray);
+  ComputedBatteryparameter = ComputeTheReadings(Temperature,SOC,ChargeRate, ComputedData);
   PrintComputedReadingsOnConsole(ComputedData);
       for(int i=0; i<9; i++)
     {
-        printf("%f",ComputedDataArray[i]);
+        printf("%f",ComputedBatteryparameter[i]);
     }
   
-  return ComputedDataArray;
+  return ComputedBatteryparameter;
  }
