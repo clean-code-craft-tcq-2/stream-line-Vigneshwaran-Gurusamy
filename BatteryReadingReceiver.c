@@ -2,7 +2,6 @@
 #include <math.h>
 #include <stdlib.h>
 #include "BatteryReadingReceiver.h"
-float *arrayToComputedData;
 
 void PrintComputedReadingsOnConsole(char *ComputedData)
 {
@@ -45,7 +44,7 @@ float ComputeMin(float data[])
     return Minimum;
 }
 
-float * ComputeTheReadings(float* Temperature, float* SOC, float* ChargeRate, char *ComputedData)
+void ComputeTheReadings(float* Temperature, float* SOC, float* ChargeRate, char *ComputedData,float *ComputedDataArray)
 {
     float MinTemperature = ComputeMin(Temperature);
     float MaxTemperature = ComputeMax(Temperature);
@@ -56,11 +55,9 @@ float * ComputeTheReadings(float* Temperature, float* SOC, float* ChargeRate, ch
     float SMATemperature =  ComputeSMA(Temperature);
     float SMASOC = ComputeSMA(SOC);
     float SMAChargeRate =  ComputeSMA(ChargeRate);
-    arrayToComputedData = (float*)calloc(9, sizeof(float));
-    arrayToComputedData[9] = {MinTemperature,MaxTemperature,MinSOC,MaxSOC,MinChargeRate,MaxChargeRate, SMATemperature, SMASOC, SMAChargeRate};
+    ComputedDataArray[9] = {MinTemperature,MaxTemperature,MinSOC,MaxSOC,MinChargeRate,MaxChargeRate, SMATemperature, SMASOC, SMAChargeRate};
     sprintf(ComputedData,"MinTemperature:%f,MaxTemperature:%f,MinSOC:%f,MaxSOC:%f,MinChargeRate:%f,MaxChargeRate:%f,SMATemperature:%f,SMASOC:%f,SMAChargeRate:%f",MinTemperature,MaxTemperature,MinSOC,MaxSOC,MinChargeRate,MaxChargeRate, SMATemperature, SMASOC, SMAChargeRate);  
-    return arrayToComputedData;
-}
+   }
 
 void ReadBatteryReadingsfromConsole(float* Temperature, float* SOC, float* ChargeRate)
 {
@@ -73,9 +70,9 @@ void ReadBatteryReadingsfromConsole(float* Temperature, float* SOC, float* Charg
 float * BatteryReceiver(float* Temperature, float* SOC, float* ChargeRate)
 {
   char ComputedData[50];
-  float *ComputedDataArray;
+  float ComputedDataArray[9];
   ReadBatteryReadingsfromConsole(Temperature,SOC,ChargeRate);
-  ComputedDataArray = ComputeTheReadings(Temperature,SOC,ChargeRate, ComputedData);
+  ComputeTheReadings(Temperature,SOC,ChargeRate, ComputedData,ComputedDataArray);
   PrintComputedReadingsOnConsole(ComputedData);
       for(int i=0; i<9; i++)
     {
