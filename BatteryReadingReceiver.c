@@ -4,11 +4,6 @@
 #include "BatteryReadingReceiver.h"
 float *ComputedDataArray;
 
-void PrintComputedReadingsOnConsole(char *ComputedData)
-{
-  printf("%s\n",ComputedData);
-}
-
 float ComputeSMA(float data[])
 {
     int sum;
@@ -45,23 +40,6 @@ float ComputeMin(float data[])
     return Minimum;
 }
 
-float* ComputeTheReadings(float* Temperature, float* SOC, float* ChargeRate, char *ComputedData)
-{
-    ComputedDataArray = (float*)calloc(9, sizeof(float));
-    float MinTemperature = ComputeMin(Temperature);
-    float MaxTemperature = ComputeMax(Temperature);
-    float MinSOC = ComputeMin(SOC);
-    float MaxSOC = ComputeMax(SOC);
-    float MinChargeRate =  ComputeMin(ChargeRate);
-    float MaxChargeRate =  ComputeMax(ChargeRate);
-    float SMATemperature =  ComputeSMA(Temperature);
-    float SMASOC = ComputeSMA(SOC);
-    float SMAChargeRate =  ComputeSMA(ChargeRate);
-    ComputedDataArray = {MinTemperature,MaxTemperature,MinSOC,MaxSOC,MinChargeRate,MaxChargeRate, SMATemperature, SMASOC, SMAChargeRate};
-    sprintf(ComputedData,"MinTemperature:%f,MaxTemperature:%f,MinSOC:%f,MaxSOC:%f,MinChargeRate:%f,MaxChargeRate:%f,SMATemperature:%f,SMASOC:%f,SMAChargeRate:%f",MinTemperature,MaxTemperature,MinSOC,MaxSOC,MinChargeRate,MaxChargeRate, SMATemperature, SMASOC, SMAChargeRate);  
-   return ComputedDataArray;
-}
-
 void ReadBatteryReadingsfromConsole(float* Temperature, float* SOC, float* ChargeRate)
 {
     for(int i=0; i<NO_OF_READINGS; i++)
@@ -70,17 +48,25 @@ void ReadBatteryReadingsfromConsole(float* Temperature, float* SOC, float* Charg
     }
 }
 
-float * BatteryReceiver(float* Temperature, float* SOC, float* ChargeRate)
+void PrintComputedReadingsOnConsole(float *BMSParameter, float MaxValue, float Minvalue, float SMA)
+{
+  int readingIndex = 0;
+  printf("Data received from sender\n");
+  
+  for(readingIndex = 0; readingIndex < NO_OF_READINGS; readingIndex++)
+  {
+    printf("%f\n",BMSParameter[readingIndex]);
+  }
+  printf("Max value: %f, Min value: %f, SMA: %f\n",MaxValue,Minvalue,SMA);
+  
+}
+
+void BatteryReceiver(float* Temperature, float* SOC, float* ChargeRate)
 {
   char ComputedData[50];
   float *ComputedBatteryparameter;
   ReadBatteryReadingsfromConsole(Temperature,SOC,ChargeRate);
-  ComputedBatteryparameter = ComputeTheReadings(Temperature,SOC,ChargeRate, ComputedData);
-  PrintComputedReadingsOnConsole(ComputedData);
-      for(int i=0; i<9; i++)
-    {
-        printf("%f",ComputedBatteryparameter[i]);
-    }
-  
-  return ComputedBatteryparameter;
- }
+  PrintComputedReadingsOnConsole(Temperature,ComputeMax(Temperature),ComputeMin(Temperature),ComputeSMA(Temperature));
+  PrintComputedReadingsOnConsole(SOC,ComputeMax(SOC),ComputeMin(SOC),ComputeSMA(SOC));
+  PrintComputedReadingsOnConsole(ChargeRate,ComputeMax(ChargeRate),ComputeMin(ChargeRate),ComputeSMA(ChargeRate));
+}
