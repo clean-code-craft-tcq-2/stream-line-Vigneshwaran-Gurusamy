@@ -76,5 +76,10 @@ float * BatteryReceiver(float* Temperature, float* SOC, float* ChargeRate)
   ReadBatteryReadingsfromConsole(Temperature,SOC,ChargeRate);
   ComputedDataArray = ComputeTheReadings(Temperature,SOC,ChargeRate, ComputedData);
   PrintComputedReadingsOnConsole(ComputedData);
+      for(int i=0; i<9; i++)
+    {
+        printf("%f",ComputedDataArray[i]);
+    }
+  
   return ComputedDataArray;
  }
