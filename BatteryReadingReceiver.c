@@ -2,7 +2,6 @@
 #include <math.h>
 #include <stdlib.h>
 #include "BatteryReadingReceiver.h"
-float *ComputedDataArray;
 
 float ComputeSMA(float data[])
 {
@@ -63,8 +62,6 @@ void PrintComputedReadingsOnConsole(float *BMSParameter, float MaxValue, float M
 
 void BatteryReceiver(float* Temperature, float* SOC, float* ChargeRate)
 {
-  char ComputedData[50];
-  float *ComputedBatteryparameter;
   ReadBatteryReadingsfromConsole(Temperature,SOC,ChargeRate);
   PrintComputedReadingsOnConsole(Temperature,ComputeMax(Temperature),ComputeMin(Temperature),ComputeSMA(Temperature));
   PrintComputedReadingsOnConsole(SOC,ComputeMax(SOC),ComputeMin(SOC),ComputeSMA(SOC));
