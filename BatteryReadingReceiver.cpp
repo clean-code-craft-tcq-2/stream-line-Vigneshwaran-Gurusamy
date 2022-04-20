@@ -10,7 +10,7 @@ TEST_CASE("Tests to check whether sensor data is read from console")
   float Current_MaxValue, Current_MinValue, Current_SMAValue, expectedMaxValue, expectedMinValue, expectedSMAValue;
   
   BatteryReceiver(Temperature,SOC,ChargeRate);
-  float expectedoutput[2][3] = {{0.9,53,6}, {1,64,44}};
+  float expectedoutput[2][3] = {{6,53,0.9}, {44,64,1}};
   for(int i=0;i<2;i++)
   {
     REQUIRE(Temperature[i] == expectedoutput[i][0]);
